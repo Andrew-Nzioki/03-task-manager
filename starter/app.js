@@ -1,10 +1,12 @@
 const express = require("express");
+var cors = require("cors");
 const app = express();
 const tasks = require("./routes/tasks");
-connectDB = require("./db/connect");
-const dotenv = require("dotenv");
-dotenv.config({ path: __dirname + "/..env" });
+const connectDB = require("./db/connect");
+require("dotenv").config();
 //middleware
+app.use(cors());
+app.use(express.static("./public"));
 app.use(express.json());
 
 //routes
@@ -12,7 +14,7 @@ app.get("/hello", (req, res) => {
   res.send("Task Manager app");
 });
 
-app.use("/api/v1/tasks", tasks);
+app.use("/api/v1/tasks", cors(), tasks);
 
 const port = 3000;
 const start = async () => {

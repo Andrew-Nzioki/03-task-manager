@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+var cors = require("cors");
 
 //Get all Tasks
 const getAllTasks = async (req, res) => {
@@ -33,11 +34,6 @@ const getTask = async (req, res) => {
   }
 };
 
-//update a single Task
-const updateTask = (req, res) => {
-  res.json({ id: req.params.id });
-};
-
 //delete Task
 const deleteTask = async (req, res) => {
   try {
@@ -51,7 +47,28 @@ const deleteTask = async (req, res) => {
     }
 
     res.status(200).json({ task });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+//update a single Task
+const updateTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    const task = await Task.findByIdAndUpdate({ _id: taskID }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!task) {
+      return res
+        .status(400)
+        .json({ msg: `No task to delete with id :${taskID}` });
+    }
+    res.status(200).json({ id: taskID, data: req.body });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 module.exports = {
