@@ -1,15 +1,13 @@
 const express=require('express')
-const router=express.Router();
+const router=express.Router()
 
-//middleware
-app.use(express.json())
+
 //routes
-router.router('/',(req,res)=>{
-    res.send('all items')
+router.route('/',(req,res)=>{
+    res.send('all task items')
 })
 
-//middleware
-app.use('/api/v1/tasks',tasks)
+
 
 //all the routes
 //app.get('/api/v1/tasks') -get all tasks
@@ -18,3 +16,4 @@ app.use('/api/v1/tasks',tasks)
 //app.patch('/api/v1/taks/:id)-update task
 //app.delete('/api/v1/tasks/:id) -delete task
 
+module.exports=router
