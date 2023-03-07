@@ -1,23 +1,26 @@
-const express =require('express')
+const express = require("express");
 const app = express();
-const tasks=require('./routes/task')
-
+const tasks = require("./routes/tasks");
+connectDB = require("./db/connect");
+const dotenv = require("dotenv");
+dotenv.config({ path: __dirname + "/..env" });
 //middleware
-app.use(express.json())
-
+app.use(express.json());
 
 //routes
-app.get('/hello',(req,res)=>{
-    res.send('Task Manager app')
-})
+app.get("/hello", (req, res) => {
+  res.send("Task Manager app");
+});
 
-app.use('/api/v1/tasks',tasks)
+app.use("/api/v1/tasks", tasks);
 
-
-
-
-
-const port=3000
-app.listen(port,console.log(`server is listen on port ${port}`))
-
-
+const port = 3000;
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, console.log(`server is listen on port ${port}`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+start();
