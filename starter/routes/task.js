@@ -3,10 +3,9 @@ const router=express.Router()
 
 
 //routes
-router.route('/',(req,res)=>{
+router.route('/').get((req,res)=>{
     res.send('all task items')
 })
-
 
 
 //all the routes
