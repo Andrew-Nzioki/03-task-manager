@@ -1,12 +1,10 @@
 const express=require('express')
 const router=express.Router()
 
-
+const {getAllTasks,getTask,updateTask,deleteTask, createTask}=require('../controllers/tasks')
 //routes
-router.route('/').get((req,res)=>{
-    res.send('all task items')
-})
-
+router.route('/').get(getAllTasks).post(createTask)
+router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
 
 //all the routes
 //app.get('/api/v1/tasks') -get all tasks
